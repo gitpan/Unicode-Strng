@@ -1,0 +1,127 @@
+Thursday, April 11, 2002
+
+Dear MacPerl Users,
+
+this is the Unicode::String 2.06 module with a shared library compiled for MacPerl 
+5.6.1 (and higher). This was compiled with MPW's MrC (PPC). Passed all tests with 
+the MrC build of the MacPerl 5.6.1 application. Let me know of any problems you 
+might encounter.
+
+
+*** NOTE:
+This package contains shared libraries, which are loaded dynamically by MacPerl -- 
+well, normally. Currently, dynamic loading of shared libs might NOT work with the MPW 
+MacPerl tool. However, dynamic loading reliable works with the MacPerl application.
+Note also that dynamic loading is NOT supported by the 68K versions of the MacPerl 
+application and tool. And finally, note that this distribution will NOT work with 
+good old MacPerl 5.2.0r4.
+
+
+You can download the Unicode-Strng-2.06-bin56Mac.tgz tarball from my CPAN directory
+
+    $CPAN/authors/id/T/TW/TWEGNER/
+
+
+
+INSTALLATION
+============
+The module is best installed using Chris Nandor's installme.plx droplet. Simply drop 
+the packed archive or the unpacked folder on the droplet. Answer the upcoming question 
+"Convert all text and MacBinary files?" with "Yes". This should install the module 
+properly. 
+
+Since MacPerl 5.6.1 beta 1, the installer is part of the MacPerl disribution.
+	
+
+Have fun.
+
+--
+Thomas Wegner
+
+<t_wegner@gmx.net>
+
+
+
+############################ ORIGINAL FOLLOWS ##########################################
+
+
+
+These are experimental modules to handle various Unicode issues.  They
+were made before perl included native UTF8 support.
+
+More information on what Unicode is and can do for you are to be found
+at http://www.unicode.org
+
+The current set of modules are:
+
+  Unicode::String   - represent strings of Unicode chars
+  Unicode::CharName - look up character names
+  Unicode::Map8     - mapping tables towards 8-bit char sets
+
+(the Unicode::Map8 module is distributed separately)
+
+
+Some of ideas to investigate for the Unicode modules are:
+
+   o Depreciation because of perl's own utf8 support.
+
+   o Composition/decomposition support:
+     $u->decomp;  # will decomposite as much as possible:  "å"  --> "a°"
+     $u->comp;    # will composite as much as possible:    "a°" --> "å"
+
+     Need separate routines or a special argument to distinguish
+     between compatibility decomposition and canonical decomposition.
+     The last one is a subset of the first one.
+
+   o General Unicode string to number convertion (based on unidata
+     number attributes)
+
+   o Case convertions (lc, uc, ucfirst)  last one should use title-case
+
+   o Fast lookup of Unicode attributes (unidata lookup using XS)
+     $u->isletter, $u->isupper, $u->islower,....  why do we need them when
+     perl does not need them for normal text??
+
+   o There might be some support for the private area (i.e. adding case
+     convertion and char properties to chars within the area).
+
+   o Unicode tr-function, sprintf-function
+
+   o Unicode string comparison functions: cmp(), le, eq,...
+
+   o Unicode regular expressions: m// s/// split(//,..)
+
+   o Unicode filehandles (automatic convertion from UTF-7/UTF-8/8-bit 
+     char set when reading,writing to filehandles)
+
+   o Fast convertion to other large char sets (east-asien).  I don't
+     know anything about this.
+
+
+EXAMPLES
+
+The following are examples of use of the current modules:
+
+   use Unicode::String qw(latin1 utf8);
+
+   $u = utf8("this is a string\n");
+   print $u->ucs4;
+   print $u->utf16;
+   print $u->utf8;
+   print $u->utf7;
+   print $u->latin1;
+   print $u->hex;
+
+   print latin1("naïve\n")->utf8;
+
+   use Unicode::CharName qw(uname);
+   print uname(ord('$')), "\n";
+
+
+
+COPYRIGHT
+
+  © 1997-2000 Gisle Aas. All rights reserved.
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
